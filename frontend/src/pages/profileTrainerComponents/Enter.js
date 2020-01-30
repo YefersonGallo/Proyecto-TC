@@ -20,7 +20,7 @@ export default class Enter extends Component {
     }
 
     async componentDidMount() {
-        const gym = await axios.get('http://localhost:4060/api/gymTrainer/' + this.state.idTrainer);
+        const gym = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + this.state.idTrainer);
         this.setState({
             codeGym: gym.data[0].codeGym
         })
@@ -28,8 +28,8 @@ export default class Enter extends Component {
 
     onSubmitSearch = async (e) => {
         e.preventDefault()
-        const user = await axios.get('http://localhost:4060/api/users/' + this.state.idUser)
-        const routines = await axios.get('http://localhost:4060/api/usersRoutines/' + this.state.idUser)
+        const user = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/users/' + this.state.idUser)
+        const routines = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines/' + this.state.idUser)
         if (user.data.length !== 0) {
             this.setState({
                 nameUser: user.data[0].names,
@@ -70,7 +70,7 @@ export default class Enter extends Component {
             idUser: this.state.idUserS,
             codeGym: this.state.codeGym
         }
-        await axios.post('http://localhost:4060/api/enterGym', newEnter)
+        await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/enterGym', newEnter)
         alert("Usuario Ingresado")
     }
 

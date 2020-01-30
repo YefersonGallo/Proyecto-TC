@@ -23,7 +23,7 @@ export default class Reports extends Component {
     }
 
     async componentDidMount(){
-        const reportMonths = await axios.get('http://localhost:4060/api/reports/gym')
+        const reportMonths = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/reports/gym')
         console.log(reportMonths.data)
         this.setState({
             options: {

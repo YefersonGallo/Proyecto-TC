@@ -17,7 +17,7 @@ export default class Trainers extends Component {
     }
 
     getTrainers = async () => {
-        const res = await axios.get('http://localhost:4060/api/trainers');
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers');
         this.setState({ trainers: res.data });
     }
 
@@ -35,9 +35,9 @@ export default class Trainers extends Component {
             password: this.state.password
         }
         if (this.state.edit) {
-            await axios.put('http://localhost:4060/api/trainers/' + id, newTrainer)
+            await axios.put('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + id, newTrainer)
         } else {
-            await axios.post('http://localhost:4060/api/trainers', newTrainer)
+            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/trainers', newTrainer)
         }
         this.setState({
             idTrainer: '',
@@ -54,12 +54,12 @@ export default class Trainers extends Component {
     }
 
     deleteTrainer = async (id) => {
-        await axios.delete('http://localhost:4060/api/trainers/' + id)
+        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + id)
         this.getTrainers();
     }
 
     updateUser = async (id) => {
-        const res = await axios.get('http://localhost:4060/api/trainers/' + id)
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + id)
         this.setState({
             idTrainer: res.data.idTrainer,
             documentType: res.data.documentType,

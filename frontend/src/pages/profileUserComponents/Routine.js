@@ -11,7 +11,7 @@ export default class Routine extends Component {
     }
 
     async componentDidMount() {
-        const routines = await axios.get('http://localhost:4060/api/usersRoutines/' + this.state.idUser);
+        const routines = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines/' + this.state.idUser);
         console.log(routines.data)
         if (routines.data.length !== 0) {
             this.setState({
@@ -26,7 +26,7 @@ export default class Routine extends Component {
         var routine = ''
         var auxList = this.state.routines;
         this.state.routinesList.map(async id => (
-            routine = await axios.get('http://localhost:4060/api/routines/' + id),
+            routine = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/routines/' + id),
             auxList.push(routine.data)
         ))
         this.setState({

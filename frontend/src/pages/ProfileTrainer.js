@@ -17,11 +17,11 @@ export default class ProfileTrainer extends Component {
         this.setState({
             page: this.props.match.path
         })
-        const trainers = await axios.get('http://localhost:4060/api/trainerlogin/')
+        const trainers = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainerlogin/')
         this.setState({
             idTrainer: trainers.data[trainers.data.length - 1].idTrainer
         })
-        const trainer = await axios.get('http://localhost:4060/api/trainers/' + this.state.idTrainer)
+        const trainer = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + this.state.idTrainer)
         console.log(trainer.data[0])
         this.setState({
             trainer: trainer.data[0]

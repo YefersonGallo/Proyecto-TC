@@ -80,12 +80,12 @@ export default class Gyms extends Component {
     }
 
     getGyms = async () => {
-        const res = await axios.get('http://localhost:4060/api/gyms');
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gyms');
         this.setState({ gyms: res.data });
     }
 
     getTrainers = async () => {
-        const res2 = await axios.get('http://localhost:4060/api/trainers');
+        const res2 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers');
         console.log(res2)
         this.setState({ trainers: res2.data })
         if (res2.data !== 0) {
@@ -105,7 +105,7 @@ export default class Gyms extends Component {
                 name: this.state.name,
                 ubication: this.state.ubication,
             }
-            await axios.post('http://localhost:4060/api/gyms', newGym)
+            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/gyms', newGym)
             this.setState({
                 code: '',
                 name: '',
@@ -120,15 +120,15 @@ export default class Gyms extends Component {
             idTrainer: this.state.trainerSel,
             codeGym: this.state.codeSel
         }
-        await axios.post('http://localhost:4060/api/gymTrainer', newTrainerGym)
-        const trainergym = await axios.get('http://localhost:4060/api/gymTrainer/' + newTrainerGym.codeGym)
+        await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer', newTrainerGym)
+        const trainergym = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + newTrainerGym.codeGym)
         if (trainergym.data.length !== 0) {
             this.getTrainerName(newTrainerGym.codeGym);
         }
     }
 
     showTrainerName = async (codeGym) => {
-        const trainergym = await axios.get('http://localhost:4060/api/gymTrainer/' + codeGym)
+        const trainergym = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
         this.setState({
             flag: trainergym.data.length === 0
         })
@@ -148,9 +148,9 @@ export default class Gyms extends Component {
     }
 
     getTrainerName = async (codeGym) => {
-        const gymTrainer = await axios.get('http://localhost:4060/api/gymTrainer/' + codeGym)
+        const gymTrainer = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
         if (gymTrainer.data.length !== 0){
-            const trainer = await axios.get('http://localhost:4060/api/trainers/' + gymTrainer.data[0].idTrainer)
+            const trainer = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + gymTrainer.data[0].idTrainer)
             console.log(trainer)
             this.setState({
             nameTrainer: trainer.data[0].name + ' ' + trainer.data[0].lastname
@@ -159,10 +159,10 @@ export default class Gyms extends Component {
     }
 
 deleteGym = async (id, codeGym) => {
-    await axios.delete('http://localhost:4060/api/gyms/' + id)
-    const gymTrainer = await axios.get('http://localhost:4060/api/gymTrainer/' + codeGym)
+    await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/gyms/' + id)
+    const gymTrainer = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
     if (gymTrainer.data.length !== 0) {
-        await axios.delete('http://localhost:4060/api/gymTrainer/' + gymTrainer.data._id)
+        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + gymTrainer.data._id)
     }
     this.getGyms();
 }

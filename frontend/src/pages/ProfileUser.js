@@ -16,11 +16,11 @@ export default class ProfileUser extends Component {
         this.setState({
             page: this.props.match.path
         })
-        const users = await axios.get('http://localhost:4060/api/userlogin/')
+        const users = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/userlogin/')
         this.setState({
             idUser: users.data[users.data.length - 1].idUser
         })
-        const user = await axios.get('http://localhost:4060/api/users/' + this.state.idUser)
+        const user = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/users/' + this.state.idUser)
         this.setState({
             user: user.data[0]
         })
