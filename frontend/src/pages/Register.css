@@ -1,0 +1,86 @@
+.title{
+    margin:2%
+}
+.color-text{
+    color: #495057;
+    margin-top: 1.5%;
+    margin-right: -5%;
+    margin-left: -1%;
+}
+
+.color{
+    color: #495057;
+}
+
+.btn-date{
+    margin-left: -13%;
+    margin-top: 10%;
+}
+
+.btn-mar{
+    margin-left:1%;
+    margin-right:1%;
+    margin-bottom: 1%;
+}
+
+.containerForm{
+    border:  solid;
+    border-color: #495057;
+    margin-bottom: 3%;
+    padding: 2%;
+}
+
+.benLabel{
+    margin-top: 2%;
+    margin-left: -1.5%;
+    margin-bottom: 2%;
+}
+
+.check-init{
+    margin-left: 15%;
+}
+
+.check-bottom{
+    margin-bottom: 2%;
+}
+
+.color-radio{
+    color: #495057;
+    margin-top: 1.5%;
+    margin-left: 1%;
+}
+
+.ans{
+    margin-left: 3%;
+    margin-right: -6%;;
+}
+
+.ansExist{
+    margin-left: 12.5%;
+}
+
+.time{
+    margin-right: -11%;
+}
+
+.emergency{
+    color: #495057;
+    margin-top: 1.5%;
+    margin-right: -1%;
+}
+
+.genre{
+    color: #495057;
+    margin-top: 1.5%;
+    margin-right: -15%;
+    
+}
+
+.date{
+    margin-top: 5%;
+    margin-left: -5%;
+}
+
+.colM{
+    margin:1%;
+}

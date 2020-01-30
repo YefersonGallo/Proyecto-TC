@@ -1,0 +1,51 @@
+.personalDataTrainer{
+    margin-left: 25%;
+}
+
+.cardRoutine{
+    width: 18rem;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.cardSelectRoutine{
+    width: 8rem;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.routine-data{
+    margin: 1%;
+    margin-top: 3%;
+}
+
+.btn-assing{
+    margin-left: 3%;
+}
+
+.dataUser{
+    margin: 3%;
+}
+
+.navbar-light .navbar-nav .active>.nav-link  {
+    color: #E4A900;
+   }
+
+.optionsRoutines{
+    margin-top: 2%;
+}
+
+.searchBar{
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.infoUser{
+    margin: 2%;
+    border-radius: 1px;
+    border: solid;
+}
+
+.infoFinal{
+    margin: 2%;
+}

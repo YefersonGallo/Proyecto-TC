@@ -1,0 +1,54 @@
+.btnUpdate{
+    margin-left: 3%;
+    
+}
+
+.footerDiv{
+    margin-left: 3.5%;
+}
+
+.btnRemove{
+    margin-left: -3%;
+}
+
+.formTrainer{
+    margin: 1%;
+    margin-left: -7%;
+}
+
+.selectId{
+    margin-left: 0.6%;
+}
+
+.comboId{
+    margin-right: 5%;
+}
+
+.cardsTrainers{
+    margin: 2%;
+    
+}
+
+.textCardT{
+    margin-top: 5%;
+}
+
+.cardTrainer{
+    margin-bottom: 5%;
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+  
+  @supports ((position: -webkit-sticky) or (position: sticky)) {
+    .sidebar-sticky {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+  }

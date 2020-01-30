@@ -1,0 +1,27 @@
+.Home{
+    width: 100%;
+}
+
+.btn{
+    outline: none;
+}
+
+.personal-data{
+    border: solid;
+    margin-left: 6%;
+}
+
+.parent-data{
+    border: solid;
+    height: 10%;
+    width: 30%;
+    margin-left: 2%;
+}
+
+.navbar-light .navbar-nav .active>.nav-link  {
+    color: #E4A900;
+   }
+
+.figuereNot{
+    height: 300px;
+}
