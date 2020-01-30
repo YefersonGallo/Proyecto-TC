@@ -86,12 +86,10 @@ export default class Gyms extends Component {
 
     getTrainers = async () => {
         const res2 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers');
-        console.log(res2)
         this.setState({ trainers: res2.data })
-        if (res2.data !== 0) {
+        if (res2.data.length !== 0) {
             this.setState({ trainerSel: (res2.data[0].idTrainer) });
         }
-        console.log(this.state.trainerSel)
     }
 
     onSubmit = async (e, id) => {
