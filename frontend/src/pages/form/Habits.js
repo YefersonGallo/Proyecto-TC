@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import '../Register.css';
+import '../Register.css'
+import { Link } from 'react-router-dom'
 
 export default class Habits extends Component {
 
@@ -82,7 +83,7 @@ export default class Habits extends Component {
                             <label className="custom-control-label color" htmlFor="confirmation">Afirmo que toda la información suministrada en este formulario es real y asumo la responsabilidad por cualquier omisión o falsedad diligenciada en la misma.</label>
                         </div>
                         <div className="row justify-content-md-center">
-                            <button type="submit" className="btn-lg btn-mar btn-primary">Registrarse</button>
+                            <button type="submit" className="btn-lg btn-mar btn-primary"><Link to="/" >Registrarse</Link></button>
                             <button onClick={this.back} className="btn-lg btn-mar btn-primary">Atrás</button>
                         </div>
                     </div>

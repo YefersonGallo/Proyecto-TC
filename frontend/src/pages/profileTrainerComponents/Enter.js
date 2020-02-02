@@ -21,9 +21,11 @@ export default class Enter extends Component {
 
     async componentDidMount() {
         const gym = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + this.state.idTrainer);
+        if(gym.data.length !== 0){
         this.setState({
             codeGym: gym.data[0].codeGym
         })
+    }
     }
 
     onSubmitSearch = async (e) => {

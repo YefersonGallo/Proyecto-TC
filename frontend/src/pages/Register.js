@@ -114,7 +114,6 @@ export default class Register extends Component {
       sports: this.state.sports
     }
     await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
-    window.location.href = '/';
   }
 
   // Proceed to next step
