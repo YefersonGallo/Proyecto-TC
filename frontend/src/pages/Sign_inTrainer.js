@@ -32,8 +32,8 @@ export default class SigninTrainer extends Component {
     })
     e.preventDefault();
     console.log(this.state.idTrainer)
-    console.log('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + this.state.idTrainer)
-    const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + this.state.idTrainer);
+    console.log('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + this.state.idTrainer)
+    const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + this.state.idTrainer);
     console.log(res)
     this.setState({ trainer: res.data });
     if(this.state.trainer.length > 0){
@@ -43,7 +43,7 @@ export default class SigninTrainer extends Component {
         flag:true
       })
       console.log(this.state.idTrainer)
-      axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/trainerlogin/', {idTrainer:this.state.idTrainer});
+      axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/trainerlogin/', {idTrainer:this.state.idTrainer});
       window.location = '/trainer';
     } else{
       alert("Datos incorrectos")

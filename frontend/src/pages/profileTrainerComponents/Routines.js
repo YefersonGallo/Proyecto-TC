@@ -60,7 +60,7 @@ export default class Routines extends Component {
 
     onSubmitSearch = async (e) => {
         e.preventDefault()
-        const user = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/users/' + this.state.idUser);
+        const user = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/users/' + this.state.idUser);
         if (user.data.length !== 0) {
             this.setState({
                 nameUser: user.data[0].names,
@@ -108,7 +108,7 @@ export default class Routines extends Component {
             newRoutine.append('description', this.state.description)
             newRoutine.append('urlImage', this.state.img)
             console.log(newRoutine)
-            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/routines', newRoutine)
+            await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/routines', newRoutine)
             this.setState({
                 name: '',
                 description: '',
@@ -126,7 +126,7 @@ export default class Routines extends Component {
             name: this.state.nameUser,
             lastname: this.state.lastnameUser,
         }
-        axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines', newUserRoutines)
+        axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines', newUserRoutines)
         this.setState({
             flag: true,
             idUser: ''
@@ -141,12 +141,12 @@ export default class Routines extends Component {
     }
 
     getRoutines = async () => {
-        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/routines');
+        const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/routines');
         this.setState({ routines: res.data });
     }
 
     deleteRoutine = async (id) => {
-        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/routines/' + id)
+        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/routines/' + id)
         this.getRoutines();
     }
 

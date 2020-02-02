@@ -113,7 +113,7 @@ export default class Register extends Component {
       increasedMuscle: this.state.increasedMuscle,
       sports: this.state.sports
     }
-    await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
+    await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
   }
 
   // Proceed to next step
