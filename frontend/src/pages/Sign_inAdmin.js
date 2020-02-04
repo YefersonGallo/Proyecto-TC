@@ -14,8 +14,12 @@ export default class SiginAdmin extends Component {
 
   onChange = (e) => {
     this.setState(
-      { [e.target.name]: e.target.value }
+      { password: e.target.value }
     )
+  }
+
+  handleValidationNumber = e => {
+    this.setState({ idAdmin: e.target.value.toString().replace(/[^0-9]+/, '')})
   }
 
   changeFlag = () =>{
@@ -62,7 +66,7 @@ export default class SiginAdmin extends Component {
               </div>
               <div className=" text-center inputs">
                 <h2 className="h2 mb-3">Iniciar Sesión <br /> (Administrador)</h2>
-                <input value={this.state.idAdmin} name="idAdmin" onChange={this.onChange} className="form-control input" type="number" placeholder="Número de documento" required />
+                <input value={this.state.idAdmin} name="idAdmin" onChange={this.handleValidationNumber} className="form-control input" type="text" placeholder="Número de documento" required />
                 <input value={this.state.password} name="password" onChange={this.onChange} className="form-control input" type="password" placeholder="Constraseña" required />
                 <button className="btn btn-primary form-control btn-submit" type="submit">Iniciar Sesión</button>
                 <Link className="col" to="/trainersign">Entrenador</Link>

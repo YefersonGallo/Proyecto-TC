@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../Register.css';
+import TextField from '@material-ui/core/TextField';
 
 export default class MedicalRecord extends Component {
     state = {
@@ -49,7 +50,7 @@ export default class MedicalRecord extends Component {
                     <div className="containerForm">
                         <h3 className="text-center">Historia Médica</h3>
                         <div className="row">
-                            <label className="col-6 color-text" required>¿A sufrido o sufre actualmente algún problema cardíaco? </label>
+                            <label className="col-6 color-text">¿Ha sufrido o sufre actualmente algún problema cardíaco? *</label>
                             <div className="color-radio col-2 ans">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="yes1" value="yes" checked={(values.question1 === "yes" ? true : false)} name="question1" className="custom-control-input" onClick={() => this.handleText1(true)} onChange={handleChange("question1")} required />
@@ -60,10 +61,10 @@ export default class MedicalRecord extends Component {
                                     <label className="custom-control-label" htmlFor="no1">No</label>
                                 </div>
                             </div>
-                            <input value={values.question1Ans} hidden={this.state.q1 ? false : true} onChange={handleChange("question1Ans")} name="question1Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question1 === "yes" ? true : false)} />
+                            <TextField value={values.question1Ans} hidden={this.state.q1 ? false : true} onChange={handleChange("question1Ans")} name="question1Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question1 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col-6 color-text" required>¿A sufrido o sufre actualmente algún problema respiratorio o enfermedad pulmonar? </label>
+                            <label className="col-6 color-text">¿Ha sufrido o sufre actualmente algún problema respiratorio o enfermedad pulmonar? *</label>
                             <div className="color-radio col-2 ans">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question2 === "yes" ? true : false)} onChange={handleChange("question2")} type="radio" id="yes2" name="question2" className="custom-control-input" onClick={() => this.handleText2(true)} required />
@@ -74,10 +75,10 @@ export default class MedicalRecord extends Component {
                                     <label className="custom-control-label" htmlFor="no2">No</label>
                                 </div>
                             </div>
-                            <input value={values.question2Ans} onChange={handleChange("question2Ans")} hidden={this.state.q2 ? false : true} name="question2Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question2 === "yes" ? true : false)} />
+                            <TextField value={values.question2Ans} onChange={handleChange("question2Ans")} hidden={this.state.q2 ? false : true} name="question2Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question2 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col-6 color-text" required>¿Tiene alguna enfermedad neurológica? </label>
+                            <label className="col-6 color-text" >¿Tiene alguna enfermedad neurológica? *</label>
                             <div className="color-radio col-2 ans">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question3 === "yes" ? true : false)} type="radio" onChange={handleChange("question3")} id="yes3" name="question3" className="custom-control-input" onClick={() => this.handleText3(true)} required />
@@ -88,10 +89,10 @@ export default class MedicalRecord extends Component {
                                     <label className="custom-control-label" htmlFor="no3">No</label>
                                 </div>
                             </div>
-                            <input value={values.question3Ans} onChange={handleChange("question3Ans")} hidden={this.state.q3 ? false : true} name="question3Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question3 === "yes" ? true : false)} />
+                            <TextField value={values.question3Ans} onChange={handleChange("question3Ans")} hidden={this.state.q3 ? false : true} name="question3Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question3 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col-6 color-text" required>¿Ha tenido o tiene problemas articulares, musculares u óseos? (desagrro, esguince, trauma, fractura)</label>
+                            <label className="col-6 color-text" >¿Ha tenido o tiene problemas articulares, musculares u óseos? (desagrro, esguince, trauma, fractura) *</label>
                             <div className="col-2 color-radio ans">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question4 === "yes" ? true : false)} onChange={handleChange("question4")} type="radio" id="yes4" name="question4" className="custom-control-input" onClick={() => this.handleText4(true)} required />
@@ -102,10 +103,10 @@ export default class MedicalRecord extends Component {
                                     <label className="custom-control-label" htmlFor="no4">No</label>
                                 </div>
                             </div>
-                            <input value={values.question4Ans} onChange={handleChange("question4Ans")} hidden={this.state.q4 ? false : true} name="question4Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question4 === "yes" ? true : false)} />
+                            <TextField value={values.question4Ans} onChange={handleChange("question4Ans")} hidden={this.state.q4 ? false : true} name="question4Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question4 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col-6 color-text" required>¿Tiene algún factor de riesgo cardiovascular? (colesterol alto, diabetes, obesidad, estrés, tabaquismo, sedentarismo, consumo de alcohol excesivo) </label>
+                            <label className="col-6 color-text">¿Tiene algún factor de riesgo cardiovascular? (colesterol alto, diabetes, obesidad, estrés, tabaquismo, sedentarismo, consumo de alcohol excesivo) *</label>
                             <div className="color-radio ans col-2">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question5 === "yes" ? true : false)} onChange={handleChange("question5")} type="radio" id="yes5" name="question5" className="custom-control-input" onClick={() => this.handleText5(true)} required />
@@ -116,10 +117,10 @@ export default class MedicalRecord extends Component {
                                     <label className="custom-control-label" htmlFor="no5">No</label>
                                 </div>
                             </div>
-                            <input value={values.question5Ans} onChange={handleChange("question5Ans")} hidden={this.state.q5 ? false : true} name="question5Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question5 === "yes" ? true : false)} />
+                            <TextField value={values.question5Ans} onChange={handleChange("question5Ans")} hidden={this.state.q5 ? false : true} name="question5Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question5 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col color-text" required>¿Ha tenido molestias, dolor o presión en el pecho al realizar ejercicio? </label>
+                            <label className="col color-text" >¿Ha tenido molestias, dolor o presión en el pecho al realizar ejercicio? *</label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question6 === "yes" ? true : false)} onChange={handleChange("question6")} type="radio" id="yes6" name="question6" className="custom-control-input" required />
@@ -132,7 +133,7 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <label className="col color-text" required>¿Presenta ahogo inusual, se siente cansado con facilidad, con excesiva fatiga al realizar actividad física leve? </label>
+                            <label className="col color-text" >¿Presenta ahogo inusual, se siente cansado con facilidad, con excesiva fatiga al realizar actividad física leve? *</label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question7 === "yes" ? true : false)} onChange={handleChange("question7")} type="radio" id="yes7" name="question7" className="custom-control-input" required />
@@ -145,7 +146,7 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <label className="col color-text" required>¿Ha tenido o tiene con el ejercicio mareo, náuseas, sincopes o desmayos? </label>
+                            <label className="col color-text" >¿Ha tenido o tiene con el ejercicio mareo, náuseas, sincopes o desmayos? *</label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question8 === "yes" ? true : false)} onChange={handleChange("question8")} type="radio" id="yes8" name="question8" className="custom-control-input" required />
@@ -158,7 +159,7 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <label className="col color-text" required>¿Ha presentado algún dolor o molestia articular o muscular en las últimas dos (2) semanas? </label>
+                            <label className="col color-text">¿Ha presentado algún dolor o molestia articular o muscular en las últimas dos (2) semanas? *</label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question9 === "yes" ? true : false)} onChange={handleChange("question9")} type="radio" id="yes9" name="question9" className="custom-control-input" required />
@@ -171,7 +172,7 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <label className="col color-text" required>¿Toma algún medicamento? </label>
+                            <label className="col color-text" >¿Toma algún medicamento? *</label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question10 === "yes" ? true : false)} onChange={handleChange("question10")} type="radio" id="yes10" name="question10" onClick={() => this.handleText6(true)} className="custom-control-input" required />
@@ -184,11 +185,11 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div hidden={this.state.q6 ? false : true} className="row">
-                            <input value={values.medicines} onChange={handleChange("medicines")} name="medicines" type="text" className="col colM form-control" placeholder="¿Cuál/es medicamentos?" required={(values.question10 === "yes" ? true : false)} />
-                            <input value={values.indicatedDose} onChange={handleChange("indicatedDose")} name="indicatedDose" type="text" className="col colM form-control" placeholder="¿Cuál es dosis medicada?" required={(values.question10 === "yes" ? true : false)} />
+                            <TextField value={values.medicines} onChange={handleChange("medicines")} name="medicines" type="text" className="col colM m-1 ml-3 form-control" label="¿Cuál/es medicamentos?" required={(values.question10 === "yes" ? true : false)} />
+                            <TextField value={values.indicatedDose} onChange={handleChange("indicatedDose")} name="indicatedDose" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál es dosis medicada?" required={(values.question10 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <label className="col-10 color-text" required>¿Existe algún otro problema o enfermedad no mencionada aquí que debiera confiarnos para evitar imprevistos a la hora de realizar actividad física? </label>
+                            <label className="col-10 color-text" >¿Existe algún otro problema o enfermedad no mencionada aquí que debiera confiarnos para evitar imprevistos a la hora de realizar actividad física? *</label>
                             <div className="color-radio ansExist">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input value="yes" checked={(values.question11 === "yes" ? true : false)} onChange={handleChange("question11")} type="radio" id="yes11" name="question11" onClick={() => this.handleText7(true)} className="custom-control-input" required />
@@ -201,9 +202,9 @@ export default class MedicalRecord extends Component {
                             </div>
                         </div>
                         <div hidden={this.state.q7 ? false : true} className="row">
-                            <input value={values.question11Ans} onChange={handleChange("question11Ans")} name="question11Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question11 === "yes" ? true : false)} />
+                            <TextField value={values.question11Ans} onChange={handleChange("question11Ans")} name="question11Ans" type="text" className="col colM m-1 ml-3 mr-3 mb-10 form-control" label="¿Cuál?" required={(values.question11 === "yes" ? true : false)} />
                         </div>
-                        <div className="row justify-content-md-center">
+                        <div className="row justify-content-md-center mt-4">
                             <button type="submit" className="btn-lg btn-mar btn-primary">Siguiente</button>
                             <button onClick={this.back} className="btn-lg btn-mar btn-primary">Atrás</button>
                         </div>

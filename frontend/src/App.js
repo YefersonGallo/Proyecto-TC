@@ -26,6 +26,7 @@ export default class App extends Component {
         <Route path="/admin" exact component={ProfileAdmin} />
         <Route path="/admin/gyms" exact component={ProfileAdmin} />
         <Route path="/admin/reports" exact component={ProfileAdmin} />
+        <Route path="/admin/info" exact component={ProfileAdmin} />
         <Route path="/trainer" exact component={ProfileTrainer} />
         <Route path="/trainer/enter" exact component={ProfileTrainer} />
         <Route path="/trainer/routines" exact component={ProfileTrainer} />

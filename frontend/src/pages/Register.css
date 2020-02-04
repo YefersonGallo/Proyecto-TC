@@ -3,9 +3,7 @@
 }
 .color-text{
     color: #495057;
-    margin-top: 1.5%;
-    margin-right: -5%;
-    margin-left: -1%;
+    margin-top: 2rem;
 }
 
 .color{
@@ -44,6 +42,11 @@
     margin-bottom: 2%;
 }
 
+.PersonalData, .MedicalRecord, .Habits{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
 .color-radio{
     color: #495057;
     margin-top: 1.5%;
@@ -60,7 +63,7 @@
 }
 
 .time{
-    margin-right: -11%;
+    margin-right: -10%;
 }
 
 .emergency{
@@ -71,9 +74,13 @@
 
 .genre{
     color: #495057;
-    margin-top: 1.5%;
-    margin-right: -15%;
-    
+    margin-top: 2rem;
+    margin-right: -6.9%;
+}
+
+.color-radio{
+    margin-top: 2rem;
+    margin-right: 0.5%;
 }
 
 .date{

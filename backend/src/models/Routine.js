@@ -11,7 +11,7 @@ const RoutineSchema = new Schema({
 
 RoutineSchema.methods.setImgUrl = function setImgUrl(fileName) {
   console.log(__dirname)
-    this.urlImage = 'http://localhost:' + process.env.PORT + '/sources/' + fileName    
+    this.urlImage = 'https://backend-sic-gym-uptc.herokuapp.com' + '/sources/' + fileName    
 }
 
 module.exports = model('Routine', RoutineSchema);

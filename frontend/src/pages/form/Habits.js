@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../Register.css'
 import { Link } from 'react-router-dom'
+import TextField from '@material-ui/core/TextField'
 
 export default class Habits extends Component {
 
@@ -29,7 +30,7 @@ export default class Habits extends Component {
                     <div className="containerForm">
                         <h3 className="title text-center">Hábitos</h3>
                         <div className="row">
-                            <label className="col-6 color" required>¿Realiza habitualmente Actividad Física o Deporte que implican un aumento importante de la respiración o del ritmo cardíaco al menos durante 15 minutos continuos?</label>
+                            <label className="col-6 color" >¿Realiza habitualmente Actividad Física o Deporte que implican un aumento importante de la respiración o del ritmo cardíaco al menos durante 15 minutos continuos? *</label>
                             <div className="color-radio col-2 ans">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="yes12" value="yes" checked={(values.question12 === "yes" ? true : false)} name="question12" className="custom-control-input" onClick={() => this.handleText(true)} onChange={handleChange("question12")} required />
@@ -40,14 +41,14 @@ export default class Habits extends Component {
                                     <label className="custom-control-label" htmlFor="no12">No</label>
                                 </div>
                             </div>
-                            <input hidden={this.state.sports ? false : true} onChange={handleChange("question12Ans")} value={values.question12Ans} name="question12Ans" type="text" className="col colM form-control" placeholder="¿Cuál?" required={(values.question12 === "yes" ? true : false)} />
+                            <TextField hidden={this.state.sports ? false : true} onChange={handleChange("question12Ans")} value={values.question12Ans} name="question12Ans" type="text" className="col colM m-1 mr-3 form-control" label="¿Cuál?" required={(values.question12 === "yes" ? true : false)} />
                         </div>
                         <div className="row">
-                            <input hidden={this.state.sports ? false : true} onChange={handleChange("timeWeek")} value={values.timeWeek} name="timeWeek" type="number" className="col-3 colM form-control" placeholder="¿Cuántas veces a la semana?" required={(values.question12 === "yes" ? true : false)} />
+                            <TextField hidden={this.state.sports ? false : true} onChange={handleChange("timeWeek")} value={values.timeWeek} name="timeWeek" type="number" className="col-3 m-1 ml-3 colM form-control" label="¿Cuántas veces a la semana?" required={(values.question12 === "yes" ? true : false)} />
                             <label hidden={this.state.sports ? false : true} className="col-2 color-text time">Tiempo: </label>
-                            <input hidden={this.state.sports ? false : true} onChange={handleChange("hours")} value={values.hours} name="hours" type="number" className="col-1 colM form-control" placeholder="Horas" required={(values.question12 === "yes" ? true : false)} />
-                            <input hidden={this.state.sports ? false : true} onChange={handleChange("minutes")} value={values.minutes} name="minutes" type="number" className="col-1 colM form-control" placeholder="Minutos" required={(values.question12 === "yes" ? true : false)} />
-                            <input onChange={handleChange("lastTime")} value={values.lastTime} name="lastTime" type="text" className="col colM form-control" placeholder="Cuándo fue la última vez que estuvo en un programa de actividad física?" required />
+                            <TextField hidden={this.state.sports ? false : true} onChange={handleChange("hours")} value={values.hours} name="hours" type="number" className="col-1 m-1 colM form-control" label="Horas" required={(values.question12 === "yes" ? true : false)} />
+                            <TextField hidden={this.state.sports ? false : true} onChange={handleChange("minutes")} value={values.minutes} name="minutes" type="number" className="col-1 m-1 colM form-control" label="Minutos" required={(values.question12 === "yes" ? true : false)} />
+                            <TextField onChange={handleChange("lastTime")} value={values.lastTime} name="lastTime" type="text" className="col colM m-1 mr-3 form-control" label="Cuándo fue la última vez que estuvo en un programa de actividad física?" required />
                         </div>
                         <label className="col-12 color benLabel">Los beneficios que espero conseguir con la práctica de ejercicio físico en el gimnasio son:</label>
                         <div className="row">
@@ -83,7 +84,7 @@ export default class Habits extends Component {
                             <label className="custom-control-label color" htmlFor="confirmation">Afirmo que toda la información suministrada en este formulario es real y asumo la responsabilidad por cualquier omisión o falsedad diligenciada en la misma.</label>
                         </div>
                         <div className="row justify-content-md-center">
-                            <button type="submit" className="btn-lg btn-mar btn-primary"><Link to="/" >Registrarse</Link></button>
+                            <button type="submit" className="btn-lg btn-mar btn-primary">Registrarse</button>
                             <button onClick={this.back} className="btn-lg btn-mar btn-primary">Atrás</button>
                         </div>
                     </div>

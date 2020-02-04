@@ -18,6 +18,9 @@ app.use('/sources', express.static(staticRoute))
 
 app.use('/api/admins', require('./routes/admins'));
 app.use('/api/gyms', require('./routes/gyms'));
+app.use('/api/epss', require('./routes/eps'));
+app.use('/api/arls', require('./routes/arls'));
+app.use('/api/parents', require('./routes/parents'));
 app.use('/api/adminlogin', require('./routes/loginAdmin'));
 app.use('/api/userlogin', require('./routes/loginUser'));
 app.use('/api/trainerlogin', require('./routes/loginTrainer'));

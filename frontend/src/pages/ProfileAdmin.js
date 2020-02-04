@@ -4,6 +4,7 @@ import './ProfileUser.css'
 import Reports from './profileAdminComponents/Reports'
 import Gyms from './profileAdminComponents/Gyms'
 import Trainers from './profileAdminComponents/Trainers'
+import AddInformation from './profileAdminComponents/AddInformation'
 
 export default class ProfileAdmin extends Component {
     state = {
@@ -32,6 +33,9 @@ export default class ProfileAdmin extends Component {
                                 <Link className="nav-link" to="/admin/reports" >Reportes</Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link" to="/admin/info" >Agregar Información</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/adminsign" >Cerrar Sesión</Link>
                             </li>
                         </ul>
@@ -45,6 +49,9 @@ export default class ProfileAdmin extends Component {
                 </div>
                 <div hidden={(this.state.page === "/admin/reports") ? false : true}>
                     <Reports />
+                </div>
+                <div hidden={(this.state.page === "/admin/info") ? false : true}>
+                    <AddInformation />
                 </div>
             </div>
         );

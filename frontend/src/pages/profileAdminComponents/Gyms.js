@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import '../ProfileAdmin.css'
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
 
 export default class Gyms extends Component {
 
@@ -147,111 +152,118 @@ export default class Gyms extends Component {
 
     getTrainerName = async (codeGym) => {
         const gymTrainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
-        if (gymTrainer.data.length !== 0){
+        if (gymTrainer.data.length !== 0) {
             const trainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + gymTrainer.data[0].idTrainer)
-            console.log(trainer)
-            this.setState({
-            nameTrainer: trainer.data[0].name + ' ' + trainer.data[0].lastname
-            })
+            if (trainer.data.length !== 0) {
+                this.setState({
+                    nameTrainer: trainer.data[0].name + ' ' + trainer.data[0].lastname
+                })
+            }
         }
     }
 
-deleteGym = async (id, codeGym) => {
-    await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/gyms/' + id)
-    const gymTrainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
-    if (gymTrainer.data.length !== 0) {
-        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + gymTrainer.data._id)
+    deleteGym = async (id, codeGym) => {
+        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/gyms/' + id)
+        const gymTrainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
+        if (gymTrainer.data.length !== 0) {
+            await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + gymTrainer.data._id)
+        }
+        this.getGyms();
     }
-    this.getGyms();
-}
 
-render() {
-    return (
-        <div className="Gyms">
-            <div className="container">
-                <div className="row">
-                    <div className="col-4 formTrainer fixed-left">
-                        <div className="card">
-                            <div className="card-header text-center">
-                                <h4>{this.state.titleName}</h4>
-                            </div>
-                            <div className="card-body">
-                                <form onSubmit={this.onSubmit}>
-                                    <div className="form-group">
-                                        <input onChange={this.onInputChange} type="text" className="form-control" placeholder="Nombre del Gimnasio" name="name" value={this.state.name} required />
-                                    </div>
-                                    <div className="row ">
-                                        <label className="selectId col col-5 color-text">Ubicación: </label>
-                                        <select onChange={this.onInputUbication} value={this.state.ubicationSel} name="ubicationSel" className="comboId col colM form-control">
-                                            <option value="TUN" key="TUN">Tunja (Sede Central)</option>
-                                            <option value="FCS" key="FCS">Tunja (Facultad de Ciencias de la Salud)</option>
-                                            <option value="SOG" key="SOG">Sogamoso</option>
-                                            <option value="DUI" key="DUI">Duitama</option>
-                                            <option value="CHI" key="CHI">Chiquinquirá</option>
-                                            <option value="BOG" key="BOG">Bogotá</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">Guardar</button>
-                                </form>
+    render() {
+        return (
+            <div className="Gyms">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-4 formTrainer fixed-left">
+                            <div className="card">
+                                <div className="card-header text-center">
+                                    <h4>{this.state.titleName}</h4>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={this.onSubmit}>
+                                        <div className="form-group">
+                                            <TextField onChange={this.onInputChange} type="text" className="form-control" label="Nombre del Gimnasio" name="name" value={this.state.name} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <FormControl required className="form-control">
+                                                <InputLabel id="ubicationSel">Ubicación</InputLabel>
+                                                <Select
+                                                    onChange={this.onInputUbication}
+                                                    value={this.state.ubicationSel}
+                                                    name="ubicationSel"
+                                                >
+                                                    <MenuItem value="TUN" key="TUN">Tunja (Sede Central)</MenuItem>
+                                                    <MenuItem value="FCS" key="FCS">Tunja (Facultad de Ciencias de la Salud)</MenuItem>
+                                                    <MenuItem value="SOG" key="SOG">Sogamoso</MenuItem>
+                                                    <MenuItem value="DUI" key="DUI">Duitama</MenuItem>
+                                                    <MenuItem value="CHI" key="CHI">Chiquinquirá</MenuItem>
+                                                    <MenuItem value="BOG" key="BOG">Bogotá</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        <button type="submit" className="btn btn-primary">Guardar</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="cardsTrainers col-8 accordion" id="listGyms">
-                        <div className="container">
-                            {
-                                this.state.gyms.map(gym => (
-                                    <div className="col" key={gym._id}>
-                                        <div className="card">
-                                            <div className="card-header" id={"heading" + gym._id}>
-                                                <h2 className="mb-0">
-                                                    <button className="btn btn-link collapsed" onClick={() => { this.showTrainerName(gym.code); this.getTrainerName(gym.code)}} type="button" data-toggle="collapse" data-target={"#collapse" + gym._id} aria-expanded="false" aria-controls={"collapse" + gym._id}>
-                                                        {gym.code}
-                                                    </button>
-                                                </h2>
-                                            </div>
-                                            <div id={"collapse" + gym._id} className="collapse" aria-labelledby={"heading" + gym._id} data-parent="#listGyms">
-                                                <div hidden={this.state.flag} className="card-body" id={"collapse" + gym._id}>
-                                                    <h5>Entrenador: {this.state.nameTrainer}</h5>
+                        <div className="cardsTrainers col-8 accordion" id="listGyms">
+                            <div className="container">
+                                {
+                                    this.state.gyms.map(gym => (
+                                        <div className="col" key={gym._id}>
+                                            <div className="card">
+                                                <div className="card-header" id={"heading" + gym._id}>
+                                                    <h2 className="mb-0">
+                                                        <button className="btn btn-link collapsed" onClick={() => { this.showTrainerName(gym.code); this.getTrainerName(gym.code) }} type="button" data-toggle="collapse" data-target={"#collapse" + gym._id} aria-expanded="false" aria-controls={"collapse" + gym._id}>
+                                                            {gym.code}
+                                                        </button>
+                                                    </h2>
                                                 </div>
-                                                <div className="card-footer row justify-content-center">
-                                                    <button className="btn btn-success col-3" data-toggle="modal" data-target={this.state.target} onClick={() => { this.changeCode(gym.code) }}>Asignar Entrenador</button>
-                                                    <button className="btn btn-danger col-3" onClick={() => this.deleteGym(gym._id)} >Borrar</button>
+                                                <div id={"collapse" + gym._id} className="collapse" aria-labelledby={"heading" + gym._id} data-parent="#listGyms">
+                                                    <div hidden={this.state.flag} className="card-body" id={"collapse" + gym._id}>
+                                                        <h5>Entrenador: {this.state.nameTrainer}</h5>
+                                                    </div>
+                                                    <div className="card-footer row justify-content-center">
+                                                        <button className="btn btn-success col-3" data-toggle="modal" data-target={this.state.target} onClick={() => { this.changeCode(gym.code) }}>Asignar Entrenador</button>
+                                                        <button className="btn btn-danger col-3" onClick={() => this.deleteGym(gym._id)} >Borrar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="modal fade" id="assingTrainer" data-backdrop="static" tabIndex="-1" role="dialog" aria-labelledby="assingTrainerLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="assingTrainerLabel">Asignar entrenador</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Seleccione el entrenador para {this.state.codeSel} </p>
-                            <select onChange={this.onInputTrainer} value={this.state.trainerSel} name="trainerSel" className="comboId col colM form-control">
-                                {
-                                    this.state.trainers.map(trainer => (
-                                        <option value={trainer.idTrainer} key={trainer._id}>{trainer.name + ' ' + trainer.lastname}</option>
                                     ))
                                 }
-                            </select>
+                            </div>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick={() => { this.assingTrainer() }} data-dismiss="modal">Asignar</button>
+                    </div>
+                </div>
+                <div className="modal fade" id="assingTrainer" data-backdrop="static" tabIndex="-1" role="dialog" aria-labelledby="assingTrainerLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="assingTrainerLabel">Asignar entrenador</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Seleccione el entrenador para {this.state.codeSel} </p>
+                                <select onChange={this.onInputTrainer} value={this.state.trainerSel} name="trainerSel" className="comboId col colM form-control">
+                                    {
+                                        this.state.trainers.map(trainer => (
+                                            <option value={trainer.idTrainer} key={trainer._id}>{trainer.name + ' ' + trainer.lastname}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" onClick={() => { this.assingTrainer() }} data-dismiss="modal">Asignar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
+        )
+    }
 }

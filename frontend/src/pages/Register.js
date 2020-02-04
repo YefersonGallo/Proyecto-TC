@@ -2,13 +2,23 @@ import React, { Component } from 'react'
 import PersonalData from './form/PersonalData';
 import Habits from './form/Habits';
 import MedicalRecord from './form/MedicalRecord';
+import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import StepConnector from '@material-ui/core/StepConnector';
 import './Register.css';
 import axios from 'axios'
 
 export default class Register extends Component {
 
   state = {
-    step: 1,
+    step: 2,
     names: '',
     lastnames: '',
     documentType: 'TI',
@@ -20,7 +30,7 @@ export default class Register extends Component {
     phone: '',
     mail: '',
     eps: '',
-    rh: '',
+    rh: 'A+',
     arl: '',
     allergy: 'null',
     allergyAns: '',
@@ -137,6 +147,14 @@ export default class Register extends Component {
     this.setState({ [input]: e.target.value });
   };
 
+  handleValidationText = input => e => {
+    this.setState({ [input]: e.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '')})
+  }
+
+  handleValidationNumber = input => e => {
+    this.setState({ [input]: e.target.value.toString().replace(/[^0-9]+/, '')})
+  }
+
   onChangeDate = birthdate => {
     this.setState(
       { birthdate }
@@ -151,36 +169,114 @@ export default class Register extends Component {
     const { step } = this.state;
     const { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports } = this.state;
     const values = { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports }
-    switch (step) {
-      case 1:
-        return (
-          <div className="Register">
-            <div className="text-center mb-4">
-              <h1 className="h1 mb-3">Sistema de información y Control Gimnasios UPTC</h1>
-              <h1 className="h1 mb-3">SICGYM UPTC</h1>
-              <h2 className="h2 mb-3">Registrarse</h2>
-            </div>
-            <PersonalData nextStep={this.nextStep} handleChange={this.handleChange} values={values} onChangeDate={this.onChangeDate} />
-          </div>
-        );
-      case 2:
-        return (
-          <div className="Register">
-            <div className="text-center mb-4">
-              <h1 className="h3 mb-3">Registrarse</h1>
-            </div>
-            <MedicalRecord nextStep={this.nextStep} prevStep={this.prevStep} onChangeRadio={this.onChangeRadio} handleChange={this.handleChange} values={values} />
-          </div>
-        );
-      case 3:
-        return (
-          <div className="Register">
-            <div className="text-center mb-4">
-              <h1 className="h3 mb-3">Registrarse</h1>
-            </div>
-            <Habits onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
-          </div>
-        );
+    const ColorlibConnector = withStyles({
+      alternativeLabel: {
+        top: 22,
+      },
+      active: {
+        '& $line': {
+          backgroundImage:
+            'linear-gradient(to right, #2980b9, #2c3e50)',
+        },
+      },
+      completed: {
+        '& $line': {
+          backgroundImage:
+            'linear-gradient(to right, #2980b9, #2c3e50)',
+        },
+      },
+      line: {
+        height: 3,
+        border: 0,
+        backgroundColor: '#eaeaf0',
+        borderRadius: 1,
+      },
+    })(StepConnector);
+
+    const useColorlibStepIconStyles = makeStyles({
+      root: {
+        backgroundColor: '#ccc',
+        zIndex: 1,
+        color: '#fff',
+        width: 50,
+        height: 50,
+        display: 'flex',
+        borderRadius: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      active: {
+        backgroundImage:
+          'linear-gradient(to right, #2980b9, #2c3e50)',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+      },
+      completed: {
+        backgroundImage:
+          'linear-gradient(to right, #2980b9, #2c3e50)',
+      },
+    });
+
+    function ColorlibStepIcon(props) {
+      const classes = useColorlibStepIconStyles();
+      const { active, completed } = props;
+
+      const icons = {
+        1: <AssignmentIndIcon />,
+        2: <LocalHospitalIcon />,
+        3: <DirectionsRunIcon />,
+      };
+
+      return (
+        <div
+          className={clsx(classes.root, {
+            [classes.active]: active,
+            [classes.completed]: completed,
+          })}
+        >
+          {icons[String(props.icon)]}
+        </div>
+      );
     }
+
+    ColorlibStepIcon.propTypes = {
+      active: PropTypes.bool,
+      completed: PropTypes.bool,
+      icon: PropTypes.node,
+    };
+
+    function getSteps() {
+      return ['Datos Personales', 'Historia Médica', 'Hábitos'];
+    }
+
+    const steps = getSteps();
+
+    return (
+      <div >
+        <div className="text-center mb-4">
+          <h1 className="h1 mb-3">Sistema de información y Control Gimnasios UPTC</h1>
+          <h1 className="h1 mb-3">SICGYM UPTC</h1>
+          <h2 className="h2 mb-3">Registrarse</h2>
+        </div>
+        <Stepper alternativeLabel activeStep={step} connector={<ColorlibConnector />}>
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          <div hidden={this.state.step !== 0}>
+          <PersonalData nextStep={this.nextStep} handleValidationNumber={this.handleValidationNumber} handleValidationText={this.handleValidationText} handleChange={this.handleChange} values={values} onChangeDate={this.onChangeDate} />
+          </div>
+          <div hidden={this.state.step !== 1}>
+          <MedicalRecord nextStep={this.nextStep} prevStep={this.prevStep} onChangeRadio={this.onChangeRadio} handleChange={this.handleChange} values={values} />
+          </div>
+          <div hidden={this.state.step !== 2}>
+          <Habits onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
+          </div>
+        </div>
+      </div>
+    );
+  
   }
 }

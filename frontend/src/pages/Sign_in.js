@@ -14,8 +14,12 @@ export default class Signin extends Component {
 
   onChange = (e) => {
     this.setState(
-      { [e.target.name]: e.target.value }
+      { password: e.target.value }
     )
+  }
+
+  handleValidationNumber = e => {
+    this.setState({ idUser: e.target.value.toString().replace(/[^0-9]+/, '')})
   }
 
   changeFlag = () =>{
@@ -62,7 +66,7 @@ export default class Signin extends Component {
               </div>
               <div className=" text-center inputs">
                 <h2 className="h2 mb-3">Iniciar Sesión</h2>
-                <input value={this.state.idUser} name="idUser" onChange={this.onChange} className="form-control input" type="number" placeholder="Número de documento" required />
+                <input value={this.state.idUser} name="idUser" onChange={this.handleValidationNumber} className="form-control input" type="text" placeholder="Número de documento" required />
                 <input value={this.state.password} name="password" onChange={this.onChange} className="form-control input" type="password" placeholder="Constraseña" required />
                 <p className="text-center">Si no tienes cuenta registrate <Link to="/register">aquí</Link></p>
                 <button className="btn btn-primary form-control btn-submit" type="submit">Iniciar Sesión</button>
