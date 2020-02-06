@@ -30,12 +30,12 @@ export default class Trainers extends Component {
         this.getTrainers()
     }
 
-    handleValidationText = input => e => {
-        this.setState({ [input]: e.target.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '') })
+    handleValidationText = e => {
+        this.setState({ [e.target.name]: e.target.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '') })
       }
     
-      handleValidationNumber = input => e => {
-        this.setState({ [input]: e.target.value.toString().replace(/[^0-9]+/, '') })
+      handleValidationNumber = e => {
+        this.setState({ [e.target.name]: e.target.value.toString().replace(/[^0-9]+/, '') })
       }
     
 
