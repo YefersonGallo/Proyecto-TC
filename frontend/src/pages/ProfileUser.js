@@ -9,7 +9,9 @@ export default class ProfileUser extends Component {
     state = {
         page: '',
         idUser: '',
-        user: ''
+        user: '',
+        routines: [],
+        flag: false
     }
 
     async componentDidMount() {
@@ -24,6 +26,13 @@ export default class ProfileUser extends Component {
         this.setState({
             user: user.data[0]
         })
+        const routines = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines/' + this.state.idUser);
+        if (routines.data.length !== 0) {
+            this.setState({
+                flag: true,
+                routines: routines.data[0].routinesUser
+            })
+        }
     }
 
     changePage(page) {
@@ -54,11 +63,11 @@ export default class ProfileUser extends Component {
                         </ul>
                     </div>
                 </nav>
+                <div hidden={(this.state.page === "/user/routines") ? false : true} >
+                    <Routine idUser={this.state.idUser} routines={this.state.routines} flag={this.state.flag} user={this.state.user} />
+                </div>
                 <div hidden={(this.state.page === "/user") ? false : true}>
                     <Home idUser={this.state.idUser} user={this.state.user} />
-                </div>
-                <div hidden={(this.state.page === "/user/routines") ? false : true} >
-                    <Routine idUser={this.state.idUser} user={this.state.user} />
                 </div>
             </div>
         );
