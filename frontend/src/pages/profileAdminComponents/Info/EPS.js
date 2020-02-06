@@ -12,7 +12,7 @@ export default class CreateEPS extends Component {
     }
 
     getEPSs = async () => {
-        const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/epss')
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/epss')
         this.setState({ epss: res.data })
     }
 
@@ -40,7 +40,7 @@ export default class CreateEPS extends Component {
             const newEPS = {
                 name: this.state.name
             }
-            await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/epss', newEPS)
+            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/epss', newEPS)
             this.setState({
                 name: ''
             })
@@ -49,7 +49,7 @@ export default class CreateEPS extends Component {
     }
 
     deleteEPS = async (id) => {
-        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/epss/' + id)
+        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/epss/' + id)
         this.getEPSs()
     }
 

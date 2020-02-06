@@ -12,7 +12,7 @@ export default class CreateParent extends Component {
     }
 
     getParents = async () => {
-        const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/parents')
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/parents')
         this.setState({ parents: res.data })
     }
 
@@ -41,7 +41,7 @@ export default class CreateParent extends Component {
             const newParent = {
                 name: this.state.name
             }
-            await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/parents', newParent)
+            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/parents', newParent)
             this.setState({
                 name: ''
             })
@@ -50,7 +50,7 @@ export default class CreateParent extends Component {
     }
 
     deleteParent = async (id) => {
-        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/parents/' + id)
+        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/parents/' + id)
         this.getParents()
     }
 

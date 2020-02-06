@@ -136,15 +136,15 @@ export default class Register extends Component {
       }
       const userAcept = {idUser: this.state.idUser, response: 0, newAcept: true}
       await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/acepteds', userAcept);
-      await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
+      await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
       this.handleClick()
     }
   }
 
   async componentDidMount() {
-    const res1 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/arls')
-    const res2 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/epss')
-    const res3 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/parents')
+    const res1 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/arls')
+    const res2 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/epss')
+    const res3 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/parents')
     this.setState({
       arls: res1.data,
       epss: res2.data,
@@ -154,7 +154,7 @@ export default class Register extends Component {
   }
 
   async getUsers(){
-    const res4 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/users')
+    const res4 = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/users')
     this.setState({
       users: res4.data
     })

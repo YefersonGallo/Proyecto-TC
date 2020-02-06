@@ -23,7 +23,7 @@ export default class Reports extends Component {
     }
 
     async componentDidMount(){
-        const reportMonths = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/reports/gym')
+        const reportMonths = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/reports/gym')
         this.setState({
             options: {
                 chart: {

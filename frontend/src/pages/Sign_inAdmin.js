@@ -35,7 +35,7 @@ export default class SiginAdmin extends Component {
       flag: false
     })
     e.preventDefault();
-    const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/admins/' + this.state.idAdmin);
+    const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/admins/' + this.state.idAdmin);
     this.setState({ admin: res.data });
     if(this.state.admin.length > 0){
       console.log((this.state.admin[0].idAdmin+'' === this.state.idAdmin+'') && (this.state.admin[0].password === this.state.password));
@@ -44,7 +44,7 @@ export default class SiginAdmin extends Component {
         flag:true
       })
       console.log(this.state.idAdmin)
-      axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/adminlogin/', {idAdmin:this.state.idAdmin});
+      axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/adminlogin/', {idAdmin:this.state.idAdmin});
       window.location = '/admin';
     } else{
       alert("Datos incorrectos")

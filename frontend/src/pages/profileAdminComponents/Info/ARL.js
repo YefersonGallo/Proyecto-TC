@@ -12,7 +12,7 @@ export default class CreateARL extends Component {
     }
 
     getARLs = async () => {
-        const res = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/arls')
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/arls')
         this.setState({ arls: res.data })
     }
 
@@ -40,7 +40,7 @@ export default class CreateARL extends Component {
             const newARL = {
                 name: this.state.name
             }
-            await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/arls', newARL)
+            await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/arls', newARL)
             this.setState({
                 name: ''
             })
@@ -49,7 +49,7 @@ export default class CreateARL extends Component {
     }
 
     deleteARL = async (id) => {
-        await axios.delete('http://backend-sic-gym-uptc.herokuapp.com/api/arls/' + id)
+        await axios.delete('https://backend-sic-gym-uptc.herokuapp.com/api/arls/' + id)
         this.getARLs()
     }
 
