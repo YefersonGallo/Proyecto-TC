@@ -72,12 +72,13 @@ export default class Register extends Component {
     epss: [],
     arls: [],
     parents: [],
-    users: []
+    users: [],
+    open: false
   };
 
   onSubmit = async (e) => {
-    e.preventDefault()
     var flag = false
+    this.getUsers()
     this.state.users.map(user => (user.idUser === this.state.idUser ? flag = true : flag = false))
     if (flag) {
       alert("El usuario ya ha sido registrado")
@@ -133,10 +134,10 @@ export default class Register extends Component {
         increasedMuscle: this.state.increasedMuscle,
         sports: this.state.sports
       }
-      await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
-      const userAcept = {idUser: this.state.idUser, response: 0}
+      const userAcept = {idUser: this.state.idUser, response: 0, newAcept: true}
       await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/acepteds', userAcept);
-      
+      await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
+      this.handleClick()
     }
   }
 
@@ -144,14 +145,35 @@ export default class Register extends Component {
     const res1 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/arls')
     const res2 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/epss')
     const res3 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/parents')
-    const res4 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/users')
     this.setState({
       arls: res1.data,
       epss: res2.data,
       parents: res3.data,
+    })
+    this.getUsers()
+  }
+
+  async getUsers(){
+    const res4 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/users')
+    this.setState({
       users: res4.data
     })
   }
+
+  handleClick = () => {
+    this.setState({
+        open: true
+    })
+  };
+
+handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({
+        open: false
+    })
+  };
 
   // Proceed to next step
   nextStep = () => {
@@ -194,8 +216,8 @@ export default class Register extends Component {
 
   render() {
     const { step } = this.state;
-    const { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents } = this.state;
-    const values = { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents }
+    const { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents, open } = this.state;
+    const values = { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents, open }
     const ColorlibConnector = withStyles({
       alternativeLabel: {
         top: 22,
@@ -299,7 +321,7 @@ export default class Register extends Component {
             <MedicalRecord nextStep={this.nextStep} prevStep={this.prevStep} onChangeRadio={this.onChangeRadio} handleChange={this.handleChange} values={values} />
           </div>
           <div hidden={this.state.step !== 2}>
-            <Habits onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
+            <Habits handleClick={this.handleClick} handleClose={this.handleClose} onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
           </div>
         </div>
       </div>

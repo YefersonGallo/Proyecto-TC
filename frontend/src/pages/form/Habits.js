@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import '../Register.css'
 import TextField from '@material-ui/core/TextField'
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
 
 export default class Habits extends Component {
 
     values = this.props;
     state = {
-        sports: true
+        sports: true, 
+        
     }
     handleText(sports) {
         this.setState({ sports });
@@ -20,6 +23,16 @@ export default class Habits extends Component {
         e.preventDefault();
         this.props.prevStep();
     };
+
+    handleClick = (e) => {
+        e.preventDefault()
+        this.props.handleClick()
+      };
+    
+    handleClose = (event, reason) => {
+        this.props.handleClose(event, reason)
+      };
+
 
     render() {
         const { handleChange, handleChangeCheck, values } = this.props;
@@ -88,6 +101,11 @@ export default class Habits extends Component {
                         </div>
                     </div>
                 </form>
+                <Snackbar open={values.open} autoHideDuration={6000} onClose={this.handleClose}>
+                    <MuiAlert elevation={6} variant="filled" onClose={this.handleClose} severity="info">
+                        Se han registrado sus datos, por correo se le confirmará si fue aceptado.
+                    </MuiAlert>
+                </Snackbar>
             </div>
         );
     }

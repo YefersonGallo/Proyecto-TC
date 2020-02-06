@@ -60,6 +60,7 @@ userCtrl.createUser = async(req, res) => {
         sports: sports
     })
     await newUser.save();
+    res.json({message:'User created'}) 
 }
 
 userCtrl.getUser = async (req, res) => {

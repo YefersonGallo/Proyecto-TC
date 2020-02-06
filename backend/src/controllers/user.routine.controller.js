@@ -41,7 +41,7 @@ function sendEmail(email, name, lastname) {
         from: 'Gimnasios UPTC',
         to: email,
         subject: 'Rutinas Asignadas',
-        html: ''
+        text: 'Hola, ' + name + ' ' + lastname +' se han asignado rutinas, por favor revisar la página SIC-GYM UPTC'
     };
 
     console.log("sending email", mailOptions);
