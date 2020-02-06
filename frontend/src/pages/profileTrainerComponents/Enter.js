@@ -78,7 +78,7 @@ export default class Enter extends Component {
 
     onInputChange = e => {
         this.setState({
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value.toString().replace(/[^0-9]+/, '') 
         })
     }
 

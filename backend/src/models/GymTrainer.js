@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const GymTrainerSchema = new Schema({
-    idTrainer: {type: Number, required:true},
-    codeGym: {type:String, required:true}
+    codeGym: {type:Object, required:true},
+    idTrainer: [{type: Object, required:true}]
 }, {
     timestamps: true
 });

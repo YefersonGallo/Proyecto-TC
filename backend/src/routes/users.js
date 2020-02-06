@@ -9,6 +9,8 @@ router.route('/')
 
 router.route('/:idUser')
     .get(getUser)
+    
+router.route('/:id')
     .put(updateUser)
     .delete(deleteUser)
 

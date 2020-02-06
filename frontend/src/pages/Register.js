@@ -18,10 +18,10 @@ import axios from 'axios'
 export default class Register extends Component {
 
   state = {
-    step: 2,
+    step: 0,
     names: '',
     lastnames: '',
-    documentType: 'TI',
+    documentType: '',
     idUser: '',
     password: '',
     code: '',
@@ -30,7 +30,7 @@ export default class Register extends Component {
     phone: '',
     mail: '',
     eps: '',
-    rh: 'A+',
+    rh: '',
     arl: '',
     allergy: 'null',
     allergyAns: '',
@@ -68,62 +68,89 @@ export default class Register extends Component {
     recreation: false,
     increasedMuscle: false,
     sports: false,
-    confirmation: false
+    confirmation: false,
+    epss: [],
+    arls: [],
+    parents: [],
+    users: []
   };
 
   onSubmit = async (e) => {
-    const newUser = {
-      names: this.state.names,
-      lastnames: this.state.lastnames,
-      documentType: this.state.documentType,
-      idUser: this.state.idUser,
-      password: this.state.password,
-      code: this.state.code,
-      birthdate: this.state.birthdate,
-      genre: this.state.genre,
-      phone: this.state.phone,
-      mail: this.state.mail,
-      eps: this.state.eps,
-      rh: this.state.rh,
-      arl: this.state.arl,
-      allergy: this.state.allergy,
-      allergyAns: this.state.allergyAns,
-      nameParent: this.state.nameParent,
-      phoneParent: this.state.phoneParent,
-      parent: this.state.parent,
-      question1: this.state.question1,
-      question1Ans: this.state.question1Ans,
-      question2: this.state.question2,
-      question2Ans: this.state.question2Ans,
-      question3: this.state.question3,
-      question3Ans: this.state.question3Ans,
-      question4: this.state.question4,
-      question4Ans: this.state.question4Ans,
-      question5: this.state.question5,
-      question5Ans: this.state.question5Ans,
-      question6: this.state.question6,
-      question7: this.state.question7,
-      question8: this.state.question8,
-      question9: this.state.question9,
-      question10: this.state.question10,
-      medicines: this.state.medicines,
-      indicatedDose: this.state.indicatedDose,
-      question11: this.state.question11,
-      question11Ans: this.state.question11Ans,
-      question12: this.state.question12,
-      question12Ans: this.state.question12Ans,
-      timeWeek: this.state.timeWeek,
-      hours: this.state.hours,
-      minutes: this.state.minutes,
-      lastTime: this.state.lastTime,
-      health: this.state.health,
-      conditioning: this.state.conditioning,
-      lose: this.state.lose,
-      recreation: this.state.recreation,
-      increasedMuscle: this.state.increasedMuscle,
-      sports: this.state.sports
+    e.preventDefault()
+    var flag = false
+    this.state.users.map(user => (user.idUser === this.state.idUser ? flag = true : flag = false))
+    if (flag) {
+      alert("El usuario ya ha sido registrado")
+    } else {
+      const newUser = {
+        names: this.state.names,
+        lastnames: this.state.lastnames,
+        documentType: this.state.documentType,
+        idUser: this.state.idUser,
+        password: this.state.password,
+        code: this.state.code,
+        birthdate: this.state.birthdate,
+        genre: this.state.genre,
+        phone: this.state.phone,
+        mail: this.state.mail,
+        eps: this.state.eps,
+        rh: this.state.rh,
+        arl: this.state.arl,
+        allergy: this.state.allergy,
+        allergyAns: this.state.allergyAns,
+        nameParent: this.state.nameParent,
+        phoneParent: this.state.phoneParent,
+        parent: this.state.parent,
+        question1: this.state.question1,
+        question1Ans: this.state.question1Ans,
+        question2: this.state.question2,
+        question2Ans: this.state.question2Ans,
+        question3: this.state.question3,
+        question3Ans: this.state.question3Ans,
+        question4: this.state.question4,
+        question4Ans: this.state.question4Ans,
+        question5: this.state.question5,
+        question5Ans: this.state.question5Ans,
+        question6: this.state.question6,
+        question7: this.state.question7,
+        question8: this.state.question8,
+        question9: this.state.question9,
+        question10: this.state.question10,
+        medicines: this.state.medicines,
+        indicatedDose: this.state.indicatedDose,
+        question11: this.state.question11,
+        question11Ans: this.state.question11Ans,
+        question12: this.state.question12,
+        question12Ans: this.state.question12Ans,
+        timeWeek: this.state.timeWeek,
+        hours: this.state.hours,
+        minutes: this.state.minutes,
+        lastTime: this.state.lastTime,
+        health: this.state.health,
+        conditioning: this.state.conditioning,
+        lose: this.state.lose,
+        recreation: this.state.recreation,
+        increasedMuscle: this.state.increasedMuscle,
+        sports: this.state.sports
+      }
+      await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
+      const userAcept = {idUser: this.state.idUser, response: 0}
+      await axios.post('https://backend-sic-gym-uptc.herokuapp.com/api/acepteds', userAcept);
+      
     }
-    await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/users', newUser);
+  }
+
+  async componentDidMount() {
+    const res1 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/arls')
+    const res2 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/epss')
+    const res3 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/parents')
+    const res4 = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/users')
+    this.setState({
+      arls: res1.data,
+      epss: res2.data,
+      parents: res3.data,
+      users: res4.data
+    })
   }
 
   // Proceed to next step
@@ -148,11 +175,11 @@ export default class Register extends Component {
   };
 
   handleValidationText = input => e => {
-    this.setState({ [input]: e.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '')})
+    this.setState({ [input]: e.target.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '')})
   }
 
   handleValidationNumber = input => e => {
-    this.setState({ [input]: e.target.value.toString().replace(/[^0-9]+/, '')})
+    this.setState({ [input]: e.target.value.toString().replace(/[^0-9]+/, '') })
   }
 
   onChangeDate = birthdate => {
@@ -167,8 +194,8 @@ export default class Register extends Component {
 
   render() {
     const { step } = this.state;
-    const { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports } = this.state;
-    const values = { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports }
+    const { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents } = this.state;
+    const values = { names, lastnames, documentType, idUser, password, code, birthdate, genre, phone, mail, eps, rh, arl, allergy, allergyAns, nameParent, phoneParent, parent, question1, question1Ans, question2, question2Ans, question3, question3Ans, question4, question4Ans, question5, question5Ans, question6, question7, question8, question9, question10, medicines, indicatedDose, question11, question11Ans, question12, question12Ans, timeWeek, hours, minutes, lastTime, benefits, confirmation, health, conditioning, lose, recreation, increasedMuscle, sports, arls, epss, parents }
     const ColorlibConnector = withStyles({
       alternativeLabel: {
         top: 22,
@@ -266,17 +293,17 @@ export default class Register extends Component {
         </Stepper>
         <div>
           <div hidden={this.state.step !== 0}>
-          <PersonalData nextStep={this.nextStep} handleValidationNumber={this.handleValidationNumber} handleValidationText={this.handleValidationText} handleChange={this.handleChange} values={values} onChangeDate={this.onChangeDate} />
+            <PersonalData nextStep={this.nextStep} handleValidationNumber={this.handleValidationNumber} handleValidationText={this.handleValidationText} handleChange={this.handleChange} values={values} onChangeDate={this.onChangeDate} />
           </div>
           <div hidden={this.state.step !== 1}>
-          <MedicalRecord nextStep={this.nextStep} prevStep={this.prevStep} onChangeRadio={this.onChangeRadio} handleChange={this.handleChange} values={values} />
+            <MedicalRecord nextStep={this.nextStep} prevStep={this.prevStep} onChangeRadio={this.onChangeRadio} handleChange={this.handleChange} values={values} />
           </div>
           <div hidden={this.state.step !== 2}>
-          <Habits onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
+            <Habits onSubmit={this.onSubmit} prevStep={this.prevStep} handleChange={this.handleChange} onChangeRadio={this.onChangeRadio} values={values} handleChangeCheck={this.handleChangeCheck} />
           </div>
         </div>
       </div>
     );
-  
+
   }
 }

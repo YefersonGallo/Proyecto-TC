@@ -4,7 +4,8 @@ const cors = require('cors');
 const RoutineSchema = new Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
-    urlImage: {type: String, required: true}
+    urlImage: {type: String, required: true},
+    category: [{type: Object, required: true}]
 }, {
     timestamps: true
 });

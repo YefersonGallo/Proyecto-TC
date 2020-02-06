@@ -7,9 +7,10 @@ routineCtrl.getRoutines = async (req, res) => {
 }
 
 routineCtrl.createRoutine = async(req, res) => {
-    const { name, description} = req.body;
+    console.log(req.body)
+    const { name, description, category} = req.body;
     const newRoutine = new RoutineModel({
-        name, description
+        name, description, category
     })
     if(req.file){
         const {filename} = req.file
@@ -20,9 +21,9 @@ routineCtrl.createRoutine = async(req, res) => {
 }
 
 routineCtrl.updateRoutine = async(req, res) => {
-    const {name, description} = req.body;
+    const {name, description, category} = req.body;
     await RoutineModel.findOneAndUpdate(req.params.id, {
-        name, description
+        name, description, category
     });
     res.json({message:'Routine updated'}) 
 }

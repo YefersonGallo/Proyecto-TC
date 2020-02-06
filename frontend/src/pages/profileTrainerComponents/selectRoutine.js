@@ -19,7 +19,6 @@ export default class SelectRoutine extends Component {
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Buenas');
                     const fistBool = !this.state.active;
                     this.setState({ active: fistBool })
                     this.onClickDiv(routine)

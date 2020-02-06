@@ -8,12 +8,12 @@ import axios from 'axios'
 
 export default class ProfileTrainer extends Component {
     state = {
-        page: '', 
+        page: '',
         trainer: '',
         idTrainer: ''
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         this.setState({
             page: this.props.match.path
         })
@@ -43,8 +43,11 @@ export default class ProfileTrainer extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/trainer/routines" >Gestión de Rutinas</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/trainersign" >Cerrar Sesión</Link>
+                            <li className="nav-item dropdown">
+                                <label className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.trainer.name}</label>
+                                <div className="dropdown-menu">
+                                    <Link className="nav-link" style={{ color: "black" }} to="/trainersign" >Cerrar Sesión</Link>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +56,7 @@ export default class ProfileTrainer extends Component {
                     <Home idTrainer={this.state.idTrainer} trainer={this.state.trainer} />
                 </div>
                 <div hidden={(this.state.page === "/trainer/enter") ? false : true}>
-                    <Enter idTrainer={this.state.idTrainer} trainer={this.state.trainer}/>
+                    <Enter idTrainer={this.state.idTrainer} trainer={this.state.trainer} />
                 </div>
                 <div hidden={(this.state.page === "/trainer/routines") ? false : true}>
                     <Routines />

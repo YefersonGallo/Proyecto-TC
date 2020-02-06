@@ -11,7 +11,7 @@ export default class Trainers extends Component {
 
     state = {
         idTrainer: '',
-        documentType: 'TI',
+        documentType: '',
         name: '',
         lastname: '',
         code: '',
@@ -30,32 +30,46 @@ export default class Trainers extends Component {
         this.getTrainers()
     }
 
+    handleValidationText = input => e => {
+        this.setState({ [input]: e.target.value.toString().replace(/[^a-zA-ZáéíóúÁÉÍÓÚ ]+/, '') })
+      }
+    
+      handleValidationNumber = input => e => {
+        this.setState({ [input]: e.target.value.toString().replace(/[^0-9]+/, '') })
+      }
+    
+
     onSubmit = async (e, id) => {
-        const newTrainer = {
-            idTrainer: this.state.idTrainer,
-            documentType: this.state.documentType,
-            name: this.state.name,
-            lastname: this.state.lastname,
-            code: this.state.code,
-            password: this.state.password
-        }
-        if (this.state.edit) {
-            await axios.put('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + id, newTrainer)
+        var flag = false
+        this.state.trainers.map(trainer => (trainer.idTrainer === this.state.idTrainer ? flag = true : flag = false))
+        if (flag) {
+            alert("El entrenador ya ha sido registrado")
         } else {
-            await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/trainers', newTrainer)
+            const newTrainer = {
+                idTrainer: this.state.idTrainer,
+                documentType: this.state.documentType,
+                name: this.state.name,
+                lastname: this.state.lastname,
+                code: this.state.code,
+                password: this.state.password
+            }
+            if (this.state.edit) {
+                await axios.put('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + id, newTrainer)
+            } else {
+                await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/trainers', newTrainer)
+            }
+            this.setState({
+                idTrainer: '',
+                documentType: '',
+                name: '',
+                lastname: '',
+                code: '',
+                password: '',
+                edit: false,
+                titleName: 'Crear Entrenador'
+            })
+            this.getTrainers();
         }
-        this.setState({
-            idTrainer: '',
-            documentType: 'TI',
-            name: '',
-            lastname: '',
-            code: '',
-            password: '',
-            edit: false,
-            titleName: 'Crear Entrenador'
-        })
-        this.getTrainers();
-        e.preventDefault();
     }
 
     deleteTrainer = async (id) => {
@@ -94,15 +108,15 @@ export default class Trainers extends Component {
                                 <div className="card-body">
                                     <form onSubmit={this.onSubmit}>
                                         <div className="form-group">
-                                            <TextField onChange={this.onInputChange} type="number" className="form-control" label="Número de documento" name="idTrainer" value={this.state.idTrainer} required />
+                                            <TextField onChange={this.handleValidationNumber} type="text" className="form-control" label="Número de documento" name="idTrainer" value={this.state.idTrainer} required />
                                         </div>
                                         <div className="form-group">
                                             <FormControl required className="form-control">
                                                 <InputLabel id="DocumentType">Tipo de Documento</InputLabel>
                                                 <Select
-                                                    onChange={this.onInputChange} 
-                                                    value={this.state.documentType} 
-                                                    name="documentType" 
+                                                    onChange={this.onInputChange}
+                                                    value={this.state.documentType}
+                                                    name="documentType"
                                                 >
                                                     <MenuItem value="TI" key="TI">Tarjeta de Identidad</MenuItem>
                                                     <MenuItem value="CC" key="CC">Cédula de Ciudadanía</MenuItem>
@@ -111,13 +125,13 @@ export default class Trainers extends Component {
                                             </FormControl>
                                         </div>
                                         <div className="form-group">
-                                            <TextField onChange={this.onInputChange} type="text" className="form-control" label="Nombres" name="name" value={this.state.name} required />
+                                            <TextField onChange={this.handleValidationText} type="text" className="form-control" label="Nombres" name="name" value={this.state.name} required />
                                         </div>
                                         <div className="form-group">
-                                            <TextField onChange={this.onInputChange} type="text" className="form-control" label="Apellidos" name="lastname" value={this.state.lastname} required />
+                                            <TextField onChange={this.handleValidationText} type="text" className="form-control" label="Apellidos" name="lastname" value={this.state.lastname} required />
                                         </div>
                                         <div className="form-group">
-                                            <TextField onChange={this.onInputChange} type="number" className="form-control" label="Código Institucional" name="code" value={this.state.code} required />
+                                            <TextField onChange={this.handleValidationNumber} type="text" className="form-control" label="Código Institucional" name="code" value={this.state.code} required />
                                         </div>
                                         <div className="form-group">
                                             <TextField onChange={this.onInputChange} type="password" className="form-control" label="Contraseña" name="password" value={this.state.password} required />
@@ -154,7 +168,6 @@ export default class Trainers extends Component {
                                                     <div className="card-footer justify-content-center">
                                                         <div className="footerDiv">
                                                             <button className="btn btn-danger btnRemove col-6" onClick={() => this.deleteTrainer(trainer._id)} >Borrar</button>
-                                                            <button className="btn btn-info col-6 btnUpdate" onClick={() => { this.setState({ titleName: 'Editar Entrenador', edit: true }); this.updateUser(trainer._id) }} >Editar</button>
                                                         </div>
                                                     </div>
                                                 </div>

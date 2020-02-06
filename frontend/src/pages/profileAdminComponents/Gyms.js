@@ -6,29 +6,36 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
+import Chip from '@material-ui/core/Chip'
+import Input from '@material-ui/core/Input'
 
 export default class Gyms extends Component {
 
     async componentDidMount() {
         this.getGyms()
         this.getTrainers()
+        const res = await axios.get('https://backend-sic-gym-uptc.herokuapp.com/api/ubications')
+        this.setState({
+            ubications: res.data,
+        })
     }
 
     state = {
         name: '',
-        ubicationSel: 'TUN',
-        ubication: 'Tunja (Sede Central)',
-        code: '',
+        ubicationSel: '',
+        ubication: '',
         titleName: 'Crear Gimnasio',
         gyms: [],
         codeSel: '',
         trainers: [],
         target: "",
-        trainerSel: '',
+        trainersSel: [],
+        trainersSelAux: [],
         idTrainer: "",
         codeGym: "",
         nameTrainer: '',
-        flag: true
+        flag: true,
+        ubications: []
     }
 
     onInputChange = e => {
@@ -97,7 +104,13 @@ export default class Gyms extends Component {
         }
     }
 
-    onSubmit = async (e, id) => {
+    handleChange = (e) => {
+        this.setState({
+            trainersSel: e.target.value
+        })
+    };
+
+    onSubmit = async (e) => {
         var flag = false
         this.state.gyms.map(gym => (gym.code === this.state.code ? flag = true : flag = false))
         if (flag) {
@@ -112,15 +125,17 @@ export default class Gyms extends Component {
             this.setState({
                 code: '',
                 name: '',
-                ubication: 'Tunja (Sede Central)',
+                ubication: '',
             })
             this.getGyms();
         }
+        e.preventDefaul()
+        e.stopPropagation()
     }
 
     assingTrainer = async () => {
         const newTrainerGym = {
-            idTrainer: this.state.trainerSel,
+            idTrainer: this.state.trainersSel,
             codeGym: this.state.codeSel
         }
         await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer', newTrainerGym)
@@ -128,6 +143,7 @@ export default class Gyms extends Component {
         if (trainergym.data.length !== 0) {
             this.getTrainerName(newTrainerGym.codeGym);
         }
+        console.log(this.state.nameTrainer)
     }
 
     showTrainerName = async (codeGym) => {
@@ -137,28 +153,26 @@ export default class Gyms extends Component {
         })
     }
 
-    changeCode = (codeSel) => {
-        if (this.state.trainers.length !== 0) {
-            this.setState({
-                codeSel, target: "#assingTrainer"
-            })
-        } else {
-            this.setState({
-                codeSel: "", target: ""
-            })
-            alert("No hay entrenadores registrados")
-        }
-    }
-
     getTrainerName = async (codeGym) => {
         const gymTrainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/gymTrainer/' + codeGym)
         if (gymTrainer.data.length !== 0) {
-            const trainer = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + gymTrainer.data[0].idTrainer)
-            if (trainer.data.length !== 0) {
-                this.setState({
-                    nameTrainer: trainer.data[0].name + ' ' + trainer.data[0].lastname
-                })
+            console.log(gymTrainer.data[0].idTrainer)
+            var names = ""
+            for (let index = 0; index < gymTrainer.data[0].idTrainer.length; index++) {
+                const trainer = gymTrainer.data[0].idTrainer[index];
+                const trainerAux = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/trainers/' + trainer.idTrainer)
+                if (trainerAux.data.length !== 0) {
+                    if (index < gymTrainer.data[0].idTrainer.length - 1) {
+                        names += trainerAux.data[0].name + ' ' + trainerAux.data[0].lastname + ', '
+                    } else {
+                        names += trainerAux.data[0].name + ' ' + trainerAux.data[0].lastname + ' '
+                    }
+                }
             }
+            this.showTrainerName(codeGym)
+            this.setState({
+                nameTrainer: names
+            })
         }
     }
 
@@ -182,28 +196,28 @@ export default class Gyms extends Component {
                                     <h4>{this.state.titleName}</h4>
                                 </div>
                                 <div className="card-body">
-                                    <form onSubmit={this.onSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <TextField onChange={this.onInputChange} type="text" className="form-control" label="Nombre del Gimnasio" name="name" value={this.state.name} required />
                                         </div>
                                         <div className="form-group">
                                             <FormControl required className="form-control">
-                                                <InputLabel id="ubicationSel">Ubicación</InputLabel>
+                                                <InputLabel id="parent">Ubicación</InputLabel>
                                                 <Select
                                                     onChange={this.onInputUbication}
                                                     value={this.state.ubicationSel}
                                                     name="ubicationSel"
+                                                    labelId="parent"
                                                 >
-                                                    <MenuItem value="TUN" key="TUN">Tunja (Sede Central)</MenuItem>
-                                                    <MenuItem value="FCS" key="FCS">Tunja (Facultad de Ciencias de la Salud)</MenuItem>
-                                                    <MenuItem value="SOG" key="SOG">Sogamoso</MenuItem>
-                                                    <MenuItem value="DUI" key="DUI">Duitama</MenuItem>
-                                                    <MenuItem value="CHI" key="CHI">Chiquinquirá</MenuItem>
-                                                    <MenuItem value="BOG" key="BOG">Bogotá</MenuItem>
+                                                    {
+                                                        this.state.ubications.map(ubication =>
+                                                            <MenuItem value={ubication.code} key={ubication._id}>{ubication.name}</MenuItem>
+                                                        )
+                                                    }
                                                 </Select>
                                             </FormControl>
                                         </div>
-                                        <button type="submit" className="btn btn-primary">Guardar</button>
+                                        <button onClick={this.onSubmit} className="btn btn-primary">Guardar</button>
                                     </form>
                                 </div>
                             </div>
@@ -216,7 +230,7 @@ export default class Gyms extends Component {
                                             <div className="card">
                                                 <div className="card-header" id={"heading" + gym._id}>
                                                     <h2 className="mb-0">
-                                                        <button className="btn btn-link collapsed" onClick={() => { this.showTrainerName(gym.code); this.getTrainerName(gym.code) }} type="button" data-toggle="collapse" data-target={"#collapse" + gym._id} aria-expanded="false" aria-controls={"collapse" + gym._id}>
+                                                        <button className="btn btn-link collapsed" onClick={() => { this.setState({ codeSel: gym.code }); this.showTrainerName(gym.code); this.getTrainerName(gym.code) }} type="button" data-toggle="collapse" data-target={"#collapse" + gym._id} aria-expanded="false" aria-controls={"collapse" + gym._id}>
                                                             {gym.code}
                                                         </button>
                                                     </h2>
@@ -225,9 +239,36 @@ export default class Gyms extends Component {
                                                     <div hidden={this.state.flag} className="card-body" id={"collapse" + gym._id}>
                                                         <h5>Entrenador: {this.state.nameTrainer}</h5>
                                                     </div>
-                                                    <div className="card-footer row justify-content-center">
-                                                        <button className="btn btn-success col-3" data-toggle="modal" data-target={this.state.target} onClick={() => { this.changeCode(gym.code) }}>Asignar Entrenador</button>
-                                                        <button className="btn btn-danger col-3" onClick={() => this.deleteGym(gym._id)} >Borrar</button>
+                                                    <div className="card-body" id={"collapse" + gym._id}>
+                                                        <h5 className="modal-title" >Asignar entrenador</h5>
+                                                        <p>Seleccione los entrenadores para el gimansio </p>
+                                                        <FormControl className="col-10">
+                                                            <InputLabel id="trainers">Entrenadores</InputLabel>
+                                                            <Select
+                                                                labelId="trainers"
+                                                                value={this.state.trainersSel}
+                                                                onChange={this.handleChange}
+                                                                multiple
+                                                                input={<Input id="trainers" />}
+                                                                renderValue={selected => (
+                                                                    <div>
+                                                                        {selected.map(value => (
+                                                                            <Chip key={value._id} label={value.name + ' ' + value.lastname} />
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            >
+                                                                {this.state.trainers.map(trainer => (
+                                                                    <MenuItem key={trainer._id} value={trainer}>
+                                                                        {trainer.name + ' ' + trainer.lastname}
+                                                                    </MenuItem>
+                                                                ))}
+                                                            </Select>
+                                                        </FormControl>
+                                                        <button type="button" className="col mt-2 btn btn-success" onClick={this.assingTrainer}>Asignar</button>
+                                                    </div>
+                                                    <div className="row justify-content-center">
+                                                        <button className="btn btn-danger col-3 mb-2" onClick={() => this.deleteGym(gym._id)} >Borrar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,32 +279,7 @@ export default class Gyms extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade" id="assingTrainer" data-backdrop="static" tabIndex="-1" role="dialog" aria-labelledby="assingTrainerLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="assingTrainerLabel">Asignar entrenador</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p>Seleccione el entrenador para {this.state.codeSel} </p>
-                                <select onChange={this.onInputTrainer} value={this.state.trainerSel} name="trainerSel" className="comboId col colM form-control">
-                                    {
-                                        this.state.trainers.map(trainer => (
-                                            <option value={trainer.idTrainer} key={trainer._id}>{trainer.name + ' ' + trainer.lastname}</option>
-                                        ))
-                                    }
-                                </select>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={() => { this.assingTrainer() }} data-dismiss="modal">Asignar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div >
         )
     }
 }

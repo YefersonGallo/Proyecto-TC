@@ -17,6 +17,8 @@ const staticRoute = path.join(__dirname, '/images')
 app.use('/sources', express.static(staticRoute))
 
 app.use('/api/admins', require('./routes/admins'));
+app.use('/api/ubications', require('./routes/ubications'));
+app.use('/api/acepteds', require('./routes/usersAcpeted'));
 app.use('/api/gyms', require('./routes/gyms'));
 app.use('/api/epss', require('./routes/eps'));
 app.use('/api/arls', require('./routes/arls'));

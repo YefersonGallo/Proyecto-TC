@@ -45,8 +45,11 @@ export default class ProfileUser extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/user/routines" >Rutinas</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/" >Cerrar Sesión</Link>
+                            <li className="nav-item dropdown">
+                            <label className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.user.names}</label>
+                                <div className="dropdown-menu">
+                                    <Link className="nav-link" style={{color: "black"}} to="/" >Cerrar Sesión</Link>
+                                </div>
                             </li>
                         </ul>
                     </div>

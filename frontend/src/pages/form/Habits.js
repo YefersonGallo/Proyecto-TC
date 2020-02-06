@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../Register.css'
-import { Link } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 
 export default class Habits extends Component {

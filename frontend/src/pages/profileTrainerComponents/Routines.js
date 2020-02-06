@@ -3,12 +3,20 @@ import axios from 'axios'
 import FormData from 'form-data'
 import RoutineSel from './selectRoutine'
 import '../ProfileTrainer.css'
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Chip from '@material-ui/core/Chip'
+import Input from '@material-ui/core/Input'
 
 export default class Routines extends Component {
     state = {
         routines: [],
         name: '',
         description: "",
+        category: [],
         img: '',
         image: '',
         nameUser: '',
@@ -46,7 +54,6 @@ export default class Routines extends Component {
     }
 
     addRoutineUser = (id) => {
-        console.log(id)
         var routinesAux = this.state.routinesUser
         if (routinesAux.some(routCont => routCont === id)) {
             var pos = routinesAux.indexOf(id)
@@ -55,7 +62,6 @@ export default class Routines extends Component {
             routinesAux.push(id)
         }
         this.setState({ routinesUser: routinesAux });
-        console.log(this.state.routinesUser)
     };
 
     onSubmitSearch = async (e) => {
@@ -98,7 +104,6 @@ export default class Routines extends Component {
     onSubmit = async (e) => {
         e.preventDefault()
         var flag = false
-        console.log(this.state.img)
         this.state.routines.map(routine => (routine.name === this.state.name ? flag = true : flag = false))
         if (flag) {
             alert("Ya existe una rutina con el mismo nombre.")
@@ -107,12 +112,13 @@ export default class Routines extends Component {
             newRoutine.append('name', this.state.name)
             newRoutine.append('description', this.state.description)
             newRoutine.append('urlImage', this.state.img)
-            console.log(newRoutine)
+            newRoutine.append('category', this.state.category)
             await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/routines', newRoutine)
             this.setState({
                 name: '',
                 description: '',
-                img: ''
+                img: '',
+                category: []
             })
             this.getRoutines();
         }
@@ -126,7 +132,7 @@ export default class Routines extends Component {
             name: this.state.nameUser,
             lastname: this.state.lastnameUser,
         }
-        axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines', newUserRoutines)
+        await axios.post('http://backend-sic-gym-uptc.herokuapp.com/api/usersRoutines', newUserRoutines)
         this.setState({
             flag: true,
             idUser: ''
@@ -137,7 +143,6 @@ export default class Routines extends Component {
         this.setState({
             routinesUser: this.state.routinesUser.concat(e.target.value)
         })
-        console.log(this.state.routinesUser)
     }
 
     getRoutines = async () => {
@@ -159,10 +164,37 @@ export default class Routines extends Component {
                         <div className="form">
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
-                                    <input type="text" value={this.state.name} className="form-control" placeholder="Nombre de Rutina" name="name" onChange={this.onInputChange} required />
+                                    <TextField type="text" value={this.state.name} className="form-control" label="Nombre de Rutina" name="name" onChange={this.onInputChange} required />
                                 </div>
                                 <div className="form-group">
                                     <textarea name="description" className="form-control" placeholder="Descripción" onChange={this.onInputChange} value={this.state.description} required></textarea>
+                                </div>
+                                <div className="form-group">
+                                    <FormControl className="form-control">
+                                        <InputLabel id="category">Categorías</InputLabel>
+                                        <Select
+                                            onChange={this.onInputChange}
+                                            value={this.state.category}
+                                            name="category"
+                                            labelId="category"
+                                            multiple
+                                            input={<Input id="category" />}
+                                            renderValue={selected => (
+                                                <div>
+                                                    {selected.map(value => (
+                                                        <Chip key={value} label={value} />
+                                                    ))}
+                                                </div>
+                                            )}
+                                        >
+                                            <MenuItem value="Salud y Bienestar" key="1">Salud y Bienestar</MenuItem>
+                                            <MenuItem value="Acondicionamiento Físico" key="2">Acondicionamiento Físico</MenuItem>
+                                            <MenuItem value="Bajar de Peso" key="3">Bajar de Peso</MenuItem>
+                                            <MenuItem value="Recreación" key="4">Recreación</MenuItem>
+                                            <MenuItem value="Aumento de Masa Muscular" key="5">Aumento de Masa Muscular</MenuItem>
+                                            <MenuItem value="Rendimiento Deportivo" key="6">Rendimiento Deportivo</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                                 <div className="form-group">
                                     <input type="file" name="imgUrl" onChange={this.onInputImage} required />
@@ -236,6 +268,7 @@ export default class Routines extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title">{routine.name}</h5>
                                     <p className="card-text">{routine.description}</p>
+                                    <p className="card-text">{routine.category}</p>
                                     <button className="btn btn-danger btnRemove" onClick={() => this.deleteRoutine(routine._id)} >Borrar</button>
                                 </div>
                             </div>

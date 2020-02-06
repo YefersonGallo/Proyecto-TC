@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -93,7 +93,21 @@ export default class PersonalData extends Component {
                         </div>
                         <div className="row">
                             <TextField name="email" value={values.mail} onChange={handleChange("mail")} type="mail" className="col  m-2 colM form-control" label="Correo Institucional" required />
-                            <TextField name="eps" value={values.eps} onChange={handleChange("eps")} type="text" className="col  m-2 colM form-control" label="EPS" required />
+                            <FormControl required className="col m-2 colM form-control">
+                                <InputLabel id="eps">EPS</InputLabel>
+                                <Select
+                                    name="eps"
+                                    value={values.eps}
+                                    onChange={handleChange("eps")}
+                                    labelId="eps"
+                                >
+                                    {
+                                        values.epss.map(eps =>
+                                            <MenuItem value={eps.name} key={eps._id}>{eps.name}</MenuItem>
+                                        )
+                                    }
+                                </Select>
+                            </FormControl>
                             <FormControl required className="col m-2 colM form-control">
                                 <InputLabel id="rh">RH</InputLabel>
                                 <Select
@@ -114,7 +128,21 @@ export default class PersonalData extends Component {
                             </FormControl>
                         </div>
                         <div className="row">
-                            <TextField name="arl" value={values.arl} onChange={handleChange("arl")} type="text" className="col  m-2 colM form-control" label="ARL" />
+                            <FormControl className="col m-2 colM form-control">
+                                <InputLabel id="arl">ARL</InputLabel>
+                                <Select
+                                    name="arl"
+                                    value={values.arl}
+                                    onChange={handleChange("arl")}
+                                    labelId="arl"
+                                >
+                                    {
+                                        values.arls.map(arl =>
+                                            <MenuItem value={arl.name} key={arl._id}>{arl.name}</MenuItem>
+                                        )
+                                    }
+                                </Select>
+                            </FormControl>
                             <label className="col color-text">Alergia a medicamentos * </label>
                             <div className="color-radio">
                                 <div className="custom-control custom-radio custom-control-inline">
@@ -132,7 +160,21 @@ export default class PersonalData extends Component {
                             <label className="col mb-4 emergency">En caso de emergencia informar a:</label>
                             <TextField name="nameParent" value={values.nameParent} onChange={handleValidationText("nameParent")} type="text" className="col m-2 colM mb-4 form-control" label="Nombre" required />
                             <TextField name="phoneParent" value={values.phoneParent} onChange={handleValidationNumber("phoneParent")} type="text" className="col mb-4 m-2 colM form-control" label="Télefono" required />
-                            <TextField name="parent" value={values.parent} onChange={handleValidationText("parent")} type="text" className="col m-2 mb-4 colM form-control" label="Parentesco" required />
+                            <FormControl required className="col m-2 colM form-control">
+                                <InputLabel id="parent">Parentesco</InputLabel>
+                                <Select
+                                    name="parent"
+                                    value={values.parent}
+                                    onChange={handleChange("parent")}
+                                    labelId="parent"
+                                >
+                                    {
+                                        values.parents.map(parent =>
+                                            <MenuItem value={parent.name} key={parent._id}>{parent.name}</MenuItem>
+                                        )
+                                    }
+                                </Select>
+                            </FormControl>
                         </div>
                         <div className="row justify-content-md-center">
                             <button type="submit" className="btn-lg btn-mar btn-primary">Siguiente</button>

@@ -10,7 +10,6 @@ export default class Reports extends Component {
             const element = report[index];
             months.push(element[0])
         }
-        console.log(months)
         return months
     }
 
@@ -20,13 +19,11 @@ export default class Reports extends Component {
             const element = report[index];
             values.push(element[1])
         }
-        console.log(values)
         return values
     }
 
     async componentDidMount(){
         const reportMonths = await axios.get('http://backend-sic-gym-uptc.herokuapp.com/api/reports/month')
-        console.log(reportMonths.data)
         this.setState({
             options: {
                 chart: {

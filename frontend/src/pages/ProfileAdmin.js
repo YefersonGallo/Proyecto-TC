@@ -5,13 +5,14 @@ import Reports from './profileAdminComponents/Reports'
 import Gyms from './profileAdminComponents/Gyms'
 import Trainers from './profileAdminComponents/Trainers'
 import AddInformation from './profileAdminComponents/AddInformation'
+import AceptUsers from './profileAdminComponents/AceptUsers'
 
 export default class ProfileAdmin extends Component {
     state = {
         page: ''
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             page: this.props.match.path
         })
@@ -36,7 +37,13 @@ export default class ProfileAdmin extends Component {
                                 <Link className="nav-link" to="/admin/info" >Agregar Información</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/adminsign" >Cerrar Sesión</Link>
+                                <Link className="nav-link" to="/admin/users" >Aceptar Usuarios</Link>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <label className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</label>
+                                <div className="dropdown-menu">
+                                    <Link className="nav-link" style={{color: "black"}} to="/adminsign" >Cerrar Sesión</Link>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +60,10 @@ export default class ProfileAdmin extends Component {
                 <div hidden={(this.state.page === "/admin/info") ? false : true}>
                     <AddInformation />
                 </div>
-            </div>
+                <div hidden={(this.state.page === "/admin/users") ? false : true}>
+                    <AceptUsers />
+                </div>
+            </div >
         );
     }
 }
